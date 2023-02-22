@@ -1,0 +1,70 @@
+.board {
+    background-color: rgb(13,161,146);
+    width: 250px;
+    height: 250px;
+}
+
+.cell1,  
+.cell2,
+.cell3,
+.cell4,
+.cell5,
+.cell6,
+.cell7,
+.cell8,
+.cell9 {
+    background-color: rgb(20,189,172);
+    width: 5rem;
+    height:5rem;
+    transition: all 1s;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-size: 4rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.cell1,  
+.cell2,
+.cell4,
+.cell5,
+.cell7,
+.cell8 {
+    margin-right: 5px;
+}
+
+.cell1,  
+.cell2,
+.cell3,
+.cell4,
+.cell5,
+.cell6 {
+    margin-bottom: 5px;
+}
+
+
+.row1,
+.row2,
+.row3 {
+    display: flex;
+}
+
+/* Different Cell Types Styles */
+
+.emptyCell:hover {
+    transform: scale(1.1);
+    background-color: rgb(91, 192, 182);
+}
+
+.xCell {
+    color: rgb(84,84,84);
+}
+
+.oCell {
+    color: rgb(242,235,211);
+}
+
+.winnerCell {
+    background-color: rgb(13,161,146);
+}

@@ -1,0 +1,28 @@
+.CodeEditorParent {
+    margin: 0px;
+}
+
+
+.CodeEditorHeader {
+    border: solid 1px rgb(202, 190, 190);
+    border-radius: 1px;
+    display: flex;
+    justify-items: center;
+    gap: 1rem;
+}
+
+.LanguageControl {
+
+}
+
+.EditorAndConsole {
+
+}
+
+.CodeEditor {
+    border: solid 1px rgb(202, 190, 190);
+}
+
+.Console {
+    border: solid 1px rgb(202, 190, 190);
+}

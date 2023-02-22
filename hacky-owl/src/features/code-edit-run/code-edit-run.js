@@ -1,8 +1,9 @@
 // Import react dependency
 import React from 'react'
+import './code-edit-run.css'
 
 // Import the Redux
-import { UPDATE_EDITOR_VALUE, UPDATE_CONSOLE_VALUE, UPDATE_EDITOR_LANG } from './codeSlice'
+import { UPDATE_EDITOR_VALUE, UPDATE_CONSOLE_VALUE, UPDATE_EDITOR_LANG, RESET_EDITOR_VALUE } from './codeSlice'
 import { useDispatch, useSelector } from 'react-redux';
 
 // Import CodeMirror dependency
@@ -16,17 +17,27 @@ import { materialLight } from '@uiw/codemirror-theme-material'
 
 // UI Elements
 import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
+import { PlayButton, RefreshButton } from '../../component/Custom-Buttons'
 
 // Import the run Dependency
-import runPython from './run-python'
-import runJavascript from './run-javascript';
+import runProgram from './run-program'
 
 // Defining the extensions for the CodeMirror
-let editorExtensions = []
 const stateFields = { history: historyField };
-const pythonObj = new runPython()
-const javascriptObj = new runJavascript()
+const executeCodeObj = new runProgram()
+
+const getLangExtension = (lang) => {
+    switch(lang) {
+        case "javascript":
+            return [javascript({ jsx: true })]
+        case "python":
+            return [python()]
+        default:
+            return []
+        }
+    }
 
 // Defining the Container Component
 function CodeEditRun() {
@@ -36,7 +47,10 @@ function CodeEditRun() {
     const editorValue = useSelector((state) => state.code.editorValue)
     const consoleValue = useSelector((state) => state.code.consoleValue)
     const editorLang = useSelector((state) => state.code.editorLang)
+    const supportedLang = useSelector((state) => state.code.supportedLang)
     const dispatch = useDispatch()
+
+    const editorExtensions = getLangExtension(editorLang)
 
     // Define the onEditorLanguageChange Event
     const onEditorLangChange = React.useCallback((event) => {
@@ -54,73 +68,79 @@ function CodeEditRun() {
 
     // Define the runOnClick Event
     const onRunClick = React.useCallback((event) => {
-        
-        if(editorLang === "python") {
-            let output = pythonObj.evaluate(editorValue)
-            console.log("Object (maybe a Promise)...")
-            output.then(output => {
-                output = ">>> "+ String(output)
-                console.log("<<<" , output, ">>>")
-                dispatch(UPDATE_CONSOLE_VALUE(output))
-                })
-        }
-        else {
-            let output = javascriptObj.evaluate(editorValue)
-            console.log("Value...")
-            output = ">>> "+ String(output)
-            dispatch(UPDATE_CONSOLE_VALUE(output))
-        }
-        
+        executeCodeObj.evaluate(editorLang, editorValue, onProgramExecutionComplete)        
     })
 
-    //javascript({ jsx: true }) for Js & python() for py
-    if (editorLang === "python") {
-        editorExtensions = [python()]
-    }
-    else {
-        editorExtensions = [javascript({ jsx: true })]
-    }
+    // Define what should happen on program completion
+    const onProgramExecutionComplete = React.useCallback((output) => {
+        output = ">>> "+ String(output)
+        dispatch(UPDATE_CONSOLE_VALUE(output))
+    })
 
-    console.log("code-edit-run...", editorExtensions)
+    // Define the codeReload Event
+    const onReloadClick = React.useCallback((event) => {
+            dispatch(RESET_EDITOR_VALUE())        
+    })
+
+    
+
+    //console.log("code-edit-run refreshed..", editorExtensions)
 
     // Render the Code Editor
     return (
-        <div>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={editorLang}
-                onChange={onEditorLangChange}
-            >
-                <MenuItem value={"python"}>Python</MenuItem>
-                <MenuItem value={"javascript"}>Javascript</MenuItem>
-            </Select>
-            <CodeMirror
-                value={editorValue}
-                initialState={editorState
-                    ?{
-                        json: JSON.parse(editorState),
-                        fields: stateFields
-                    }:undefined
-                }
-                height="30rem"
-                theme={dracula}
-                extensions={editorExtensions}
-                onChange={onEditorValueChange}
-                    />
-            <button onClick={onRunClick}>Run</button>
-            <CodeMirror 
-                value={consoleValue}
-                readOnly={true}
-                placeholder={"Output Console..."}
-                basicSetup={{
-                    lineNumbers: false,
-                    foldGutter: false,
-                    highlightActiveLine: false
-                }}
-                height="20rem"
-                theme={materialLight}
-                />
+        <div className='CodeEditorParent'>
+            <div className='CodeEditorHeader'>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }} size="small">
+                    <Select
+                        className='LanguageControl'
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={editorLang}
+                        onChange={onEditorLangChange}
+                    >
+                        {
+                            // Create menu item based on the supported language list
+                            supportedLang.map((lang)=> <MenuItem key={lang} value={lang}>{lang}</MenuItem>)
+                        }
+                    </Select>
+                </FormControl>
+                <PlayButton onClick={onRunClick}/>
+                <RefreshButton onClick={onReloadClick}/>
+            </div>
+            
+            <div className='EditorAndConsole'>
+                <div className='CodeEditor'>
+                    <CodeMirror
+                        value={editorValue}
+                        initialState={editorState
+                            ?{
+                                json: JSON.parse(editorState),
+                                fields: stateFields
+                            }:undefined
+                        }
+                        height="30rem"
+                        theme={dracula}
+                        extensions={editorExtensions}
+                        onChange={onEditorValueChange}
+                            />
+                </div>
+
+                <div className='Console' >
+                    <CodeMirror
+                        value={consoleValue}
+                        readOnly={true}
+                        placeholder={"Output Console..."}
+                        basicSetup={{
+                            lineNumbers: false,
+                            foldGutter: false,
+                            highlightActiveLine: false
+                        }}
+                        height="15rem"
+                        theme={materialLight}
+                        />
+                </div>
+            </div>
+
         </div>
 
     );

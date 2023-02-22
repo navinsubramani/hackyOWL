@@ -3,23 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 
 // Import the top level module
-import CodeEditRun from './features/code-edit-run/code-edit-run';
+import TicTacToe from './challenges/tic-tac-toe/tictactoe'
 
 // Import the Execution engine related modules
-import runPython from './features/code-edit-run/run-python';
+import executeProgram from './features/code-edit-run/run-program';
 
 function App() {
 
   useEffect(
     () => {
-      const pythonObj = new runPython()
+      const exeObj = new executeProgram()
     },[]
   )
   
 
   return (
     <div>
-      <CodeEditRun />
+      <TicTacToe />
     </div>
     );
 }
