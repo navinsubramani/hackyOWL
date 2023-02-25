@@ -8,21 +8,21 @@ const templateCode = {
                     javascript: {
                         starterCode: `function sum(a,b) { return a + b}
 sum(10, 23)`,
-                        headCode: ``,
                         callCode: ``
                         },
                     python: {
                         starterCode: `def sum(a,b):
     return a+ b
 sum(30, 40)`,
-                        headCode: ``,
                         callCode: ``
                         }}
 //editorValue: localStorage.getItem('editorValue') || ''
 const defaultEditorValue = '// no template code provided'
 let editorValue = defaultEditorValue
+let callerCode = ""
 try {
     editorValue = templateCode[editorLang].starterCode
+    callerCode = templateCode[editorLang].callCode
 }
 catch(err) {
     // ignore
@@ -37,6 +37,7 @@ const initialState = {
     // Get the initial State from the localStorage
     //editorValue: localStorage.getItem('editorValue') || '',
     editorValue,
+    callerCode,
     editorState: localStorage.getItem('editorState')  || '',
     consoleValue: "",
 }
@@ -67,9 +68,11 @@ export const codeSlice = createSlice({
             // Reset console for different language
             try {
                 state.editorValue = state.templateCode[state.editorLang].starterCode
+                state.callerCode = state.templateCode[state.editorLang].callCode
             }
             catch(err) {
                 state.editorValue = defaultEditorValue
+                state.callerCode = ""
             }
             state.consoleValue = initialState.consoleValue
         },
@@ -87,9 +90,11 @@ export const codeSlice = createSlice({
             state.templateCode = action.payload
             try {
                 state.editorValue = state.templateCode[state.editorLang].starterCode
+                state.callerCode = state.templateCode[state.editorLang].callCode
             }
             catch(err) {
                 state.editorValue = defaultEditorValue
+                state.callerCode = ""
             }
         }
     }

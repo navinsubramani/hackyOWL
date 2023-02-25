@@ -28,6 +28,7 @@ export const tictactoeSlice = createSlice({
 
         RESET_TICTACTOE_BOARD_STATE: (state) => {
             state.boardState = initialState.boardState
+            state.message = ""
         },
 
         UPDATE_TICTACTOE_MESSAGE: (state, action) => {

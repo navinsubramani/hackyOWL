@@ -6,8 +6,6 @@ class tictactoeLogic {
         this.boardState = ["", "", "", "", "", "", "", "", ""]
         this.p1 = p1
         this.p2 = p2
-        this.executeProgram = new executeProgram()
-
         if(this.p1 === "bot") {
             this.bot = 'x'
             this.program = 'o'
@@ -16,83 +14,75 @@ class tictactoeLogic {
             this.bot = 'o'
             this.program = 'x'            
         }
+
         // True means p1
-        this.nextMove = this.p1
+        this.lastMove = ""
+        this.currentMove = this.p1
+
+        this.executeProgram = new executeProgram()
+
+        this.result = {
+            noError: true,
+            message: "Game is a draw",
+            noWinner: true,
+            winner: ""
+        }
+        //console.log(this)
     }
 
-    play(f_onEachMove) {
+    playNextMove(f_onEachMove, f_onGameOver, code, callerCode, lang) {
+        
+        //console.log("current move: ", this.currentMove)
 
-        let noError = true
-        let message = "Game is a draw"
-        let noWinner = true
-        let Winner = ""
-
-        while(this.isBoardNotComplete() && noError && noWinner) {
-
-            if (this.nextMove === "bot") {
-                // Play the best move
-                let move = this.bestBotMove()
-
-                // Check if Valid Move
-                if(this.isValidMove(move)) {
-                    
-                    // Update the board state
-                    this.boardState[move] = this.bot
-
-                    // Check if someone won
-                    let result = this.isGameCompleteByWinner()
-                    if (result[0]) {
-                        // Someone Won
-                        noWinner = false
-                        Winner = result[1]
-                        message = "Winner is " + this.bot
-                    }
-
-                    this.nextMove = "program"
-                    
-                }
-                else {
-                    console.log("Invalid Move: ", move)
-                    message = "Unexpected Move: " + move 
-                    noError = false
-                }
-
-            }
-            else {
-                // Play the best move
-                let move = this.bestBotMove()
-
-                // Check if Valid Move
-                if(this.isValidMove(move)) {
-                    
-                    // Update the board state
-                    this.boardState[move] = this.program
-
-                    // Check if someone won
-                    let result = this.isGameCompleteByWinner()
-                    if (result[0]) {
-                        // Someone Won
-                        noWinner = false
-                        Winner = result[1]
-                        message = "Winner is " + this.program
-                    }
-
-                    this.nextMove = "bot"
-                }
-                else {
-                    console.log("Invalid Move: ", move)
-                    message = "Unexpected Move: " + move 
-                    noError = false
-                }
-            }
-
-            //console.log(this.boardState, this.nextMove)
-            f_onEachMove([...this.boardState])
-
+        // skip the run if waiting for previous move to be complete
+        if(this.lastMove === this.currentMove) {
+            console.log("wait")
+            return undefined
         }
 
+        this.lastMove = this.currentMove
+        // check if the game can be played
+        if (this.isBoardNotComplete() && this.result.noError && this.result.noWinner) {
+            
+            // Bot Game
+            if (this.currentMove === "bot") {
+                
+                // Play the best move
+                let move = this.bestBotMove()
+                this.processMove(move, this.bot)
+                
+                // Since bot has played the move synchronously
+                this.currentMove = "program"
 
-        return message
+                // Update board
+                f_onEachMove([...this.boardState])
+
+            }
+
+            // Program Game
+            else if (this.currentMove === "program") {
+
+                this.executeProgram.evaluateCodeExternally(lang, code, callerCode, JSON.stringify(this.boardState),
+                    (output) => {
+                        console.log("program evaluated: ", output)
+                        this.processMove(output, this.program)
+                        this.currentMove = "bot"
+
+                        f_onEachMove([...this.boardState])
+                        }
+                    )
+            }
+
+            else {
+                console.log("neither bot not program is playing...")
+            }
+        
+        }
+
+        // game is complete
+        else {
+            f_onGameOver(this.result.message)
+        }
     }
 
     // Return [True: if Game Over, P1/P2: Winner]
@@ -146,6 +136,32 @@ class tictactoeLogic {
             }
         });
         return emptyCellIndex
+    }
+
+    // Play the Best Bot Move by checking all cases
+    processMove(move, playerSymbol) {
+
+        // Check if Valid Move
+        if(this.isValidMove(move)) {
+            
+            // Update the board state
+            this.boardState[move] = playerSymbol
+
+            // Check if someone won
+            let result = this.isGameCompleteByWinner()
+            if (result[0]) {
+                // Someone Won
+                this.result.noWinner = false
+                this.result.Winner = result[1]
+                this.result.message = "Winner is " + playerSymbol.toUpperCase()
+            }
+            
+        }
+        else {
+            console.log("Invalid Move: ", move)
+            this.result.message = "Unexpected Move from '" + playerSymbol.toUpperCase() + "' : " + move 
+            this.result.noError = false
+        }
     }
 
     //Get Computer Move: Retuns cell Index

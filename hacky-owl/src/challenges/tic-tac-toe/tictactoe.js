@@ -21,19 +21,18 @@ const tictactoeTemplateCode = {
         // Placeholders
         javascript: {
             starterCode: `function move(board=[])
-{ 
-    return move
+{
+    return 0
 }`,
-            headCode: ``,
-            callCode: `move()`
+            callCode: `move(input)`
             },
         python: {
-            starterCode: `def sum(board=[]):
-    return move`,
-            headCode: ``,
-            callCode: `move()`
+            starterCode: `def move(board=[]):
+    return 0`,
+            callCode: `move(input)`
             }}
 let message = "Code & Play"
+let gameIntervalSession = undefined
 
 function TicTacToe() {
 
@@ -41,6 +40,10 @@ function TicTacToe() {
     const p1 = useSelector((state) => state.tictactoe.p1)
     const p2 = useSelector((state) => state.tictactoe.p2)
     const message = useSelector((state) => state.tictactoe.message)
+
+    const editorValue = useSelector((state) => state.code.editorValue)
+    const callerCode = useSelector((state) => state.code.callerCode)
+    const editorLang = useSelector((state) => state.code.editorLang)
     
     const dispatch = useDispatch()
     
@@ -57,28 +60,28 @@ function TicTacToe() {
         dispatch(RESET_TICTACTOE_BOARD_STATE())
 
         // Play Game
-        console.log("Game Started...")
+        console.log("onGameStart")
         const tictactoe = new tictactoeLogic(p1, p2)
-        let newPromise = new Promise(
-            (resolve, reject) => {
-                resolve(tictactoe.play(
-                    updateBoardState
-                ))
-            })
-        newPromise.then(
-            message => {
-                console.log(message)
-                dispatch(UPDATE_TICTACTOE_MESSAGE(message))
-            }
-        ).catch(console.log)
+        gameIntervalSession = setInterval(
+            function() {tictactoe.playNextMove(onGameUpdate, onGameEnd, editorValue, callerCode, editorLang) } , 1000 
+        )
     })
     
     // Update the Board State
-    const updateBoardState = React.useCallback((boardState) => {
+    const onGameUpdate = React.useCallback((boardState) => {
+        console.log("onGameUpdate")
         dispatch(UPDATE_TICTACTOE_BOARD_STATE(boardState))
     })
 
-    //console.log(boardState)
+    // on Game End
+    const onGameEnd = React.useCallback((msg) => {
+        console.log("onGameEnd")
+        clearInterval(gameIntervalSession)
+        console.log(msg)
+        dispatch(UPDATE_TICTACTOE_MESSAGE(msg))
+    })
+
+    console.log("tictactoe refreshed..", boardState, message)
 
     return(
         <div className="ChallengePage">

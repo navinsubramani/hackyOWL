@@ -22,7 +22,7 @@ class executeProgram {
 
     }
 
-    evaluate(lang, code, toDoFuction) {
+    evaluateCode(lang, code, toDoFuction) {
         switch(lang) {
             case "javascript":
                 {
@@ -41,7 +41,34 @@ class executeProgram {
                 }
             
             default:
-                return undefined
+                toDoFuction("unsopported language")
+        }
+
+    }
+
+    evaluateCodeExternally(lang, code, callerCode, inputJSON, toDoFuction) {
+        switch(lang) {
+            case "javascript":
+                {
+                    code = code + "\n" + "let input='" + inputJSON + "'" + "\n" + "input=JSON.parse(input);" + "\n" + callerCode
+                    //console.log(code)
+                    let output = this.javascript.evaluate(code)
+                    toDoFuction(output)
+                    break
+                } 
+            
+            case "python":
+                {   
+                    code = code + "\nimport json" + "\ninput='" + inputJSON + "'" + "\ninput=json.loads(input)" + "\n" + callerCode
+                    //console.log(code)
+                    let output = this.python.evaluate(code)
+                    output.then(op => toDoFuction(op))
+                    .catch((err)=>toDoFuction(err))
+                    break
+                }
+            
+            default:
+                toDoFuction("unsopported language")
         }
 
     }

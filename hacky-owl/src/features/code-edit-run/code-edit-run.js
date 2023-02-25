@@ -68,7 +68,7 @@ function CodeEditRun() {
 
     // Define the runOnClick Event
     const onRunClick = React.useCallback((event) => {
-        executeCodeObj.evaluate(editorLang, editorValue, onProgramExecutionComplete)        
+        executeCodeObj.evaluateCode(editorLang, editorValue, onProgramExecutionComplete)        
     })
 
     // Define what should happen on program completion
@@ -84,7 +84,7 @@ function CodeEditRun() {
 
     
 
-    //console.log("code-edit-run refreshed..", editorExtensions)
+    console.log("code-edit-run refreshed..", editorExtensions)
 
     // Render the Code Editor
     return (
