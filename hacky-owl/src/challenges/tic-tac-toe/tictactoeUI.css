@@ -1,7 +1,5 @@
 .board {
-    background-color: rgb(13,161,146);
-    width: 250px;
-    height: 250px;
+    background-color: rgb(25,118,210);
 }
 
 .cell1,  
@@ -13,7 +11,7 @@
 .cell7,
 .cell8,
 .cell9 {
-    background-color: rgb(20,189,172);
+    background-color: rgb(105, 171, 236);
     width: 5rem;
     height:5rem;
     transition: all 1s;
@@ -31,7 +29,7 @@
 .cell5,
 .cell7,
 .cell8 {
-    margin-right: 5px;
+    margin-right: 0.3rem;
 }
 
 .cell1,  
@@ -40,7 +38,7 @@
 .cell4,
 .cell5,
 .cell6 {
-    margin-bottom: 5px;
+    margin-bottom: 0.3rem;
 }
 
 
@@ -52,13 +50,8 @@
 
 /* Different Cell Types Styles */
 
-.emptyCell:hover {
-    transform: scale(1.1);
-    background-color: rgb(91, 192, 182);
-}
-
 .xCell {
-    color: rgb(84,84,84);
+    color: rgb(242,235,211);
 }
 
 .oCell {
@@ -66,5 +59,10 @@
 }
 
 .winnerCell {
-    background-color: rgb(13,161,146);
+    background-color: rgb(17, 98, 179);
+}
+
+.message {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: medium;
 }

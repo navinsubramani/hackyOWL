@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Define Initial State
 const supportedLang = ['javascript', 'python','java (not supported)', 'go (not supported)']
-const editorLang = supportedLang[0]
+const editorLang = supportedLang[1]
 const templateCode = {
                     // Placeholders
                     javascript: {

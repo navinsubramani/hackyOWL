@@ -12,8 +12,9 @@ import { python } from '@codemirror/lang-python'
 import { historyField } from '@codemirror/commands';
 // // CodeMirror 3rd party package from https://uiwjs.github.io/react-codemirror/
 import CodeMirror from '@uiw/react-codemirror'
-import { dracula, draculaInit } from '@uiw/codemirror-theme-dracula'
+import { dracula } from '@uiw/codemirror-theme-dracula'
 import { materialLight } from '@uiw/codemirror-theme-material'
+import { eclipse } from '@uiw/codemirror-theme-eclipse'
 
 // UI Elements
 import Select from '@mui/material/Select'
@@ -92,7 +93,6 @@ function CodeEditRun() {
             <div className='CodeEditorHeader'>
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }} size="small">
                     <Select
-                        className='LanguageControl'
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={editorLang}
@@ -118,8 +118,8 @@ function CodeEditRun() {
                                 fields: stateFields
                             }:undefined
                         }
-                        height="30rem"
-                        theme={dracula}
+                        height="35rem"
+                        theme={materialLight}
                         extensions={editorExtensions}
                         onChange={onEditorValueChange}
                             />
@@ -135,7 +135,7 @@ function CodeEditRun() {
                             foldGutter: false,
                             highlightActiveLine: false
                         }}
-                        height="15rem"
+                        height="100%"
                         theme={materialLight}
                         />
                 </div>

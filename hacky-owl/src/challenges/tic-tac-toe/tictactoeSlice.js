@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     boardState: ["", "", "", "", "", "", "", "", ""],
-    p1: "bot",
-    p2: "program",
+    p1: "program",
+    p2: "bot",
     message: ""
 }
 

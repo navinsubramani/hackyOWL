@@ -86,9 +86,6 @@ function TicTacToe() {
     return(
         <div className="ChallengePage">
             <div className="ChallengeArea">
-                <div className='ChallengeHeader'>
-                    <PlayButton onClick={onGameStart}/>
-                </div>
                 <div className="ChallengeInteractionArea">
                     <TicTacToeGame
                         boardState = {boardState}
@@ -97,12 +94,26 @@ function TicTacToe() {
                         message={message} 
                     />
                 </div>
-                <div className="ChallengeAboutArea">
-
+                <div className='ChallengeHeader'>
+                    <PlayButton onClick={onGameStart}/>
                 </div>
+                <p className="ChallengeDescriptionArea">
+                    <strong>Challenge</strong><br/>
+                    Your program must play the TicTacToe as "X" and win the TicTacToe Game<br/>
+                    <br/>
+                    <strong>Game Rule</strong><br/>
+                    Tic Tac Toe is a two-player game where players take turns placing their X or O symbol on a 3x3 grid. The objective of the game is to get three of your symbols in a row, either horizontally, vertically, or diagonally, while blocking your opponent from doing the same.<br/>
+                    <br/>
+                    <strong>Program Rule</strong><br/>
+                    1. Implement you main code within the given function definition<br/>
+                    2. On each call, the function will be provided with the tictactoe board information as a array of strings containing 9 elements representing the each cell value ('x', 'o' & '')<br/>
+                    3. Expected return from the function is a index where your program wants to make the next move (i.e., number between 0-8)
+                </p>
             </div>
-
-            <CodeEditRun />
+            <div className="CodeEditorArea">
+                <CodeEditRun />
+            </div>
+            
         </div>
     )
 

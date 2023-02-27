@@ -70,7 +70,8 @@ function TicTacToeGame(props) {
                     </div>
                 </div>
             </div>
-            <div>
+            <div className="message">
+                <br/>
                 <div>X: {props.p1}</div>
                 <div>O: {props.p2}</div>
                 <div>{props.message}</div>
