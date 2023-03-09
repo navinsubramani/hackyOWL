@@ -11,7 +11,7 @@ canvas {
 
 }
 
-.GetStarted {
+.LandingInfo {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -19,6 +19,22 @@ canvas {
     transform: translate(-50%, -50%);
     
     z-index: 10;
+
+    color: rgb(250, 250, 250);
+    font-size: 4rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    text-align: center;
+}
+
+
+.GetStarted {
+
 
     width: 10rem;
     height: 10rem;

@@ -24,7 +24,9 @@ function TicTacToeGame(props) {
         }
     )
     // Style the winner cells
-    winnerPattern(boardState).forEach(
+    let winnerPatterArray = winnerPattern(boardState)
+
+    winnerPatterArray.forEach(
         (element) => {
             cellClassName[element] = cellClassName[element] + " winnerCell"
         }
@@ -34,7 +36,7 @@ function TicTacToeGame(props) {
 
 
     return(
-        <div>
+        <div className="tictactoe">
             <div className="board" id="board">
                 <div className="row1">
                     <div className={cellClassName[0]} id="1">
@@ -69,12 +71,6 @@ function TicTacToeGame(props) {
                         {boardState[8]}
                     </div>
                 </div>
-            </div>
-            <div className="message">
-                <br/>
-                <div>X: {props.p1}</div>
-                <div>O: {props.p2}</div>
-                <div>{props.message}</div>
             </div>
         </div>
 

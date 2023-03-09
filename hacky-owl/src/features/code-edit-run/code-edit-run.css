@@ -24,12 +24,12 @@
 }
 
 .CodeEditor {
-
+    height: 100%;
     border: solid 0px rgb(202, 190, 190);
 }
 
 .CodeEditor > .cm-theme {
-
+    height: 100%;
 }
 
 .Console {

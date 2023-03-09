@@ -22,7 +22,7 @@ function App() {
 
   const returnDisplayScreen = React.useCallback((displayScreen) => {
     if (displayScreen === "home_page") {
-      return <HomeScreen />
+      
     }
 
     else if (displayScreen === "challenge_page") {
@@ -35,14 +35,22 @@ function App() {
     }
   })
   
-  
+  if (displayScreen === "home_page") {
+    return (
+      <div>
+        <HomeScreen />
+      </div>
+      );
+  }
 
-  return (
-    <div className='App'>
-      <NavBar />
-      {returnDisplayScreen(displayScreen)}
-    </div>
-    );
+  else {
+    return (
+      <div className='App'>
+        <NavBar />
+        {returnDisplayScreen(displayScreen)}
+      </div>
+      );
+  }
 }
 
 export default App;

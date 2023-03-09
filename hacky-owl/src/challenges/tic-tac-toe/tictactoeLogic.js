@@ -2,10 +2,11 @@ import executeProgram from "../../features/code-edit-run/run-program"
 
 
 class tictactoeLogic {
-    constructor(p1, p2) {
+    constructor(p1, p2, level) {
         this.boardState = ["", "", "", "", "", "", "", "", ""]
         this.p1 = p1
         this.p2 = p2
+        this.level = level
         if(this.p1 === "bot") {
             this.bot = 'x'
             this.program = 'o'
@@ -30,7 +31,7 @@ class tictactoeLogic {
         //console.log(this)
     }
 
-    playNextMove(f_onEachMove, f_onGameOver, code, callerCode, lang) {
+    playNextMove(f_onEachMove, f_onGameOver, f_ProgramPerformance, code, callerCode, lang) {
         
         //console.log("current move: ", this.currentMove)
 
@@ -61,12 +62,18 @@ class tictactoeLogic {
 
             // Program Game
             else if (this.currentMove === "program") {
-
-                this.executeProgram.evaluateCodeExternally(lang, code, callerCode, JSON.stringify(this.boardState),
+                let input = JSON.stringify({board: this.boardState, mySymbol: this.program})
+                this.executeProgram.evaluateCodeExternally(lang, code, callerCode, input,
                     (output) => {
                         console.log("program evaluated: ", output)
                         this.processMove(output, this.program)
                         this.currentMove = "bot"
+
+                        f_ProgramPerformance({
+                            input: input,
+                            output: output,
+                            error: !this.result.noError
+                        })
 
                         f_onEachMove([...this.boardState])
                         }

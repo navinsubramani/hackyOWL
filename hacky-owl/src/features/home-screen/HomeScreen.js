@@ -117,10 +117,17 @@ function HomeScreen() {
                     detectRetina: true,
                 }}
             />
-            <div className="GetStarted">
-                <HackyOwlButton onClick={onGettingStarted}/>
-                Getting Started
+            <div className="LandingInfo">
+
+                <strong>CODING MADE FUN</strong>
+                
+
+                <div className="GetStarted">
+                    <HackyOwlButton onClick={onGettingStarted}/>
+                    <strong>GET STARTED</strong>
+                </div>
             </div>
+
 
         </div>
 

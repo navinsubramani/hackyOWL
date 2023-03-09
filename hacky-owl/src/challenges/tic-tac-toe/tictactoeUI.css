@@ -1,3 +1,7 @@
+.tictactoe {
+
+}
+
 .board {
     background-color: rgb(25,118,210);
 }
@@ -62,7 +66,5 @@
     background-color: rgb(17, 98, 179);
 }
 
-.message {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: medium;
-}
+/* Game Information */
+
