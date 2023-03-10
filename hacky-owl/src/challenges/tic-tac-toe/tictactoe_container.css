@@ -48,6 +48,8 @@
     height: 2.5rem;
     color: rgb(25,118,210);
     background-color: rgb(232,239,246);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
 }
 
 .ChallengeDescriptionArea {

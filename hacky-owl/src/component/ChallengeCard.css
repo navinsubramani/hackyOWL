@@ -1,0 +1,7 @@
+.ChallengeCard {
+    transition: all .1s ease-in-out;
+}
+
+.ChallengeCard:hover {
+    transform: scale(1.05); 
+}

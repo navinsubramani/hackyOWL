@@ -5,7 +5,8 @@ import {useSelector} from 'react-redux'
 // Import the top level module
 import NavBar from './features/nav-bar/NavBar';
 import HomeScreen from './features/home-screen/HomeScreen'
-import TicTacToe from './challenges/tic-tac-toe/tictactoe'
+import TicTacToe from './challenges/tic-tac-toe/tictactoe_container'
+import ChallengeScreen from './features/challenges-screen/ChallengeScreen'
 
 // Import the Execution engine related modules
 import executeProgram from './features/code-edit-run/run-program';
@@ -26,12 +27,16 @@ function App() {
     }
 
     else if (displayScreen === "challenge_page") {
-      console.log("Nav Page: TicTacToe")
+      console.log("Challenge Page")
+      return <ChallengeScreen />
+    }
+
+    else if (displayScreen === "tictactoe") {
       return <TicTacToe />
     }
 
     else {
-      return <TicTacToe />
+      return <ChallengeScreen />
     }
   })
   

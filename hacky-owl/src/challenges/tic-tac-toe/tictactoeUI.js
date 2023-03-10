@@ -72,6 +72,9 @@ function TicTacToeGame(props) {
                     </div>
                 </div>
             </div>
+            <div className="GameStatus">
+                {props.gameResult}
+            </div>
         </div>
 
     )

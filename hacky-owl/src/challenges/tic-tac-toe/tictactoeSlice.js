@@ -5,8 +5,8 @@ const initialState = {
     boardState: ["", "", "", "", "", "", "", "", ""],
     p1: "program",
     p2: "bot",
-    message: "",
-    tabDisplay: "Challenge"
+    tabDisplay: "Challenge",
+    gameCompleted: false
 }
 
 
@@ -29,16 +29,16 @@ export const tictactoeSlice = createSlice({
 
         RESET_TICTACTOE_BOARD_STATE: (state) => {
             state.boardState = initialState.boardState
-            state.message = ""
-        },
-
-        UPDATE_TICTACTOE_MESSAGE: (state, action) => {
-            state.message = action.payload
+            state.gameCompleted = false
         },
 
         UPDATE_PLAYER_DETAILS: (state, action) => {
             state.p1 = action.payload.p1
             state.p2 = action.payload.p2
+        },
+
+        UPDATE_GAME_STATUS: (state, action) => {
+            state.gameCompleted = action.payload
         },
 
         UPDATE_TABDISPLAY: (state, action) => {
@@ -52,8 +52,8 @@ export const {
     UPDATE_PROGRAM_MOVE, 
     UPDATE_TICTACTOE_BOARD_STATE, 
     RESET_TICTACTOE_BOARD_STATE, 
-    UPDATE_TICTACTOE_MESSAGE, 
     UPDATE_PLAYER_DETAILS,
+    UPDATE_GAME_STATUS,
     UPDATE_TABDISPLAY 
         } = tictactoeSlice.actions
 export default tictactoeSlice.reducer

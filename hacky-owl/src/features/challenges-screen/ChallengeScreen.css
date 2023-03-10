@@ -1,0 +1,21 @@
+.ChallengeListScreen {
+    background-color: rgb(232,239,246);
+    height: 100%;
+    width: 100%;
+    min-width: 30rem;
+    overflow: auto;
+
+    padding-left: 0.5rem;
+}
+
+.ChallengeListHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    height: 2.5rem;
+    color: rgb(25,118,210);
+    background-color: rgb(232,239,246);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: larger;
+    
+}

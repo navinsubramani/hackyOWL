@@ -88,7 +88,7 @@ class tictactoeLogic {
 
         // game is complete
         else {
-            f_onGameOver(this.result.message)
+            f_onGameOver(this.result.message, this.result.noError, this.result.noWinner)
         }
     }
 
@@ -160,7 +160,7 @@ class tictactoeLogic {
                 // Someone Won
                 this.result.noWinner = false
                 this.result.Winner = result[1]
-                this.result.message = "Winner is " + playerSymbol.toUpperCase()
+                this.result.message = playerSymbol.toUpperCase()
             }
             
         }

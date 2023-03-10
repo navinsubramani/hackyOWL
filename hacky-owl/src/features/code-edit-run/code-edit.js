@@ -3,7 +3,7 @@ import React from 'react'
 import './code-edit-run.css'
 
 // Import the Redux
-import { UPDATE_EDITOR_VALUE, UPDATE_CONSOLE_VALUE, UPDATE_EDITOR_LANG, RESET_EDITOR_VALUE } from './codeSlice'
+import { UPDATE_EDITOR_VALUE, UPDATE_EDITOR_LANG, RESET_EDITOR_VALUE, UPDATE_EXAMPLE_CODE } from './codeSlice'
 import { useDispatch, useSelector } from 'react-redux';
 
 // Import CodeMirror dependency
@@ -20,7 +20,7 @@ import { eclipse } from '@uiw/codemirror-theme-eclipse'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
-import { PlayButton, RefreshButton } from '../../component/Custom-Buttons'
+import { RefreshButton, SolutionButton } from '../../component/Custom-Buttons'
 
 // Import the run Dependency
 import runProgram from './run-program'
@@ -66,22 +66,15 @@ function CodeEdit() {
         }))
     }, []);
 
-    // Define the runOnClick Event
-    const onRunClick = React.useCallback((event) => {
-        executeCodeObj.evaluateCode(editorLang, editorValue, onProgramExecutionComplete)        
-    })
-
-    // Define what should happen on program completion
-    const onProgramExecutionComplete = React.useCallback((output) => {
-        output = ">>> "+ String(output)
-        dispatch(UPDATE_CONSOLE_VALUE(output))
-    })
-
     // Define the codeReload Event
     const onReloadClick = React.useCallback((event) => {
             dispatch(RESET_EDITOR_VALUE())        
     })
 
+    // Define the Example Code Event
+    const onExampleCodeClick = React.useCallback((event) => {
+            dispatch(UPDATE_EXAMPLE_CODE())        
+    })
     
 
     //console.log("code-edit-run refreshed..", editorExtensions)
@@ -104,6 +97,7 @@ function CodeEdit() {
                     </Select>
                 </FormControl>
                 <RefreshButton onClick={onReloadClick}/>
+                <SolutionButton onClick={onExampleCodeClick}/>
             </div>
             
             <div className='EditorAndConsole'>

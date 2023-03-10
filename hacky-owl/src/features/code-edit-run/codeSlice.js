@@ -1,20 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // Define Initial State
-const supportedLang = ['javascript', 'python','java (not supported)', 'go (not supported)']
+const supportedLang = ['javascript', 'python']
 const editorLang = supportedLang[1]
 const templateCode = {
                     // Placeholders
                     javascript: {
                         starterCode: `function sum(a,b) { return a + b}
 sum(10, 23)`,
-                        callCode: ``
+                        callCode: ``,
+                        exampleCode: ``
                         },
                     python: {
                         starterCode: `def sum(a,b):
     return a+ b
 sum(30, 40)`,
-                        callCode: ``
+                        callCode: ``,
+                        exampleCode: ``
                         }}
 //editorValue: localStorage.getItem('editorValue') || ''
 const defaultEditorValue = '// no template code provided'
@@ -96,10 +98,20 @@ export const codeSlice = createSlice({
                 state.editorValue = defaultEditorValue
                 state.callerCode = ""
             }
+        },
+
+        UPDATE_EXAMPLE_CODE: (state) => {
+            try {
+                state.editorValue = state.templateCode[state.editorLang].exampleCode
+            }
+            catch(err) {
+                state.editorValue = defaultEditorValue
+                state.callerCode = ""
+            }
         }
     }
 });
 
 // Export the Actions & Reducers
-export const { UPDATE_EDITOR_VALUE, UPDATE_CONSOLE_VALUE, UPDATE_EDITOR_LANG, RESET_EDITOR_VALUE, UPDATE_CODE_TEMPLATES } = codeSlice.actions;
+export const { UPDATE_EDITOR_VALUE, UPDATE_CONSOLE_VALUE, UPDATE_EDITOR_LANG, RESET_EDITOR_VALUE, UPDATE_CODE_TEMPLATES, UPDATE_EXAMPLE_CODE } = codeSlice.actions;
 export default codeSlice.reducer

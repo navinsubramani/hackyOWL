@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 
 // Import the Redux Components
 import { useSelector, useDispatch } from "react-redux";
-import {UPDATE_CODE_TEMPLATES} from "./../../features/code-edit-run/codeSlice"
-import {UPDATE_TICTACTOE_BOARD_STATE, RESET_TICTACTOE_BOARD_STATE, UPDATE_TICTACTOE_MESSAGE, UPDATE_PLAYER_DETAILS, UPDATE_TABDISPLAY} from "./tictactoeSlice"
+import {UPDATE_CODE_TEMPLATES} from "../../features/code-edit-run/codeSlice"
+import {UPDATE_TICTACTOE_BOARD_STATE, RESET_TICTACTOE_BOARD_STATE, UPDATE_PLAYER_DETAILS, UPDATE_GAME_STATUS, UPDATE_TABDISPLAY} from "./tictactoeSlice"
 
 // Import the UI Components
-import './tictactoe.css'
+import './tictactoe_container.css'
 import { PlayButton } from "../../component/Custom-Buttons";
 import TicTacToeGame from "./tictactoeUI"
 import ToggleButton from "@mui/material/ToggleButton";
@@ -23,41 +23,21 @@ import Stack from '@mui/material/Stack';
 // import the code-edit-run
 import CodeArea from "../../features/code-edit-run/code-edit";
 import tictactoeLogic from "./tictactoeLogic";
+import tictactoe_Templates from "./tictactoe_templates"
 
 
-const tictactoeTemplateCode = {
-        // Placeholders
-        javascript: {
-            starterCode: `function move(input)
-{
-    // input.board provides the board information
-    // input.mySymbol provides your play symbol
-
-    // return the index of the board where the next move should be done
-    return 0
-}`,
-            callCode: `move(input)`
-            },
-        python: {
-            starterCode: `def move(input):
-    # input["board"] provides the board information
-    # input["mySymbol"] provides your play symbol
-
-    # return the index of the board where the next move should be done
-    return 0`,
-            callCode: `move(input)`
-            }}
-let message = "Code & Play"
+const tictactoeTemplateCode = tictactoe_Templates
 let gameIntervalSession = undefined
 let level = "Easy"
-var outputJSXList = []
+let outputJSXList = []
+let gameResult = ""
 
 function TicTacToe() {
 
     const boardState = useSelector((state) => state.tictactoe.boardState)
     const p1 = useSelector((state) => state.tictactoe.p1)
     const p2 = useSelector((state) => state.tictactoe.p2)
-    const message = useSelector((state) => state.tictactoe.message)
+    const gameCompleted = useSelector((state) => state.tictactoe.gameCompleted)
     const tabDisplay = useSelector((state) => state.tictactoe.tabDisplay)
 
     const editorValue = useSelector((state) => state.code.editorValue)
@@ -71,6 +51,8 @@ function TicTacToe() {
         () => {
             dispatch(UPDATE_CODE_TEMPLATES(tictactoeTemplateCode))
             dispatch(RESET_TICTACTOE_BOARD_STATE())
+            outputJSXList = []
+            gameResult = ""
         },[]
     )
 
@@ -78,7 +60,9 @@ function TicTacToe() {
     const onGameStart = React.useCallback((event) => {
         // Reset the board
         outputJSXList = []
+        gameResult = ""
         dispatch(RESET_TICTACTOE_BOARD_STATE())
+        dispatch(UPDATE_TABDISPLAY("Console"))
 
         // Play Game
         console.log("onGameStart")
@@ -99,11 +83,30 @@ function TicTacToe() {
     })
 
     // on Game End
-    const onGameEnd = React.useCallback((msg) => {
+    const onGameEnd = React.useCallback((msg, noError, noWinner) => {
         console.log("onGameEnd")
         clearInterval(gameIntervalSession)
-        outputJSXList.push(<Alert severity="info">{msg}</Alert>)
-        dispatch(UPDATE_TICTACTOE_MESSAGE(msg))
+        
+        if(!noError) {
+            gameResult = "ERROR"
+            outputJSXList.push(<Alert severity="info">{msg}</Alert>)
+        }
+        else {
+            if (noWinner) {
+                gameResult = "DRAW"
+            }
+            else {
+                if ((p1==="program")&&(msg==="X")) {
+                    gameResult = "WON"
+                }
+                else {
+                    gameResult = "LOST"
+                }
+            }
+            outputJSXList.push(<Alert severity="info">{gameResult}</Alert>)
+        }
+
+        dispatch(UPDATE_GAME_STATUS(true))
     })
 
     // on Player Change
@@ -129,9 +132,8 @@ function TicTacToe() {
                 <div className="ChallengeInteractionArea_1">
                     <TicTacToeGame
                         boardState = {boardState}
-                        p1={p1}
-                        p2={p2}
-                        message={message} 
+                        gameOver = {gameCompleted}
+                        gameResult = {gameResult}
                     />
                 </div>
                 <div className="ChallengeInteractionArea_2">
@@ -155,7 +157,7 @@ function TicTacToe() {
                             aria-label="Platform"
                             >
                             <ToggleButton value="Easy">Easy</ToggleButton>
-                            <ToggleButton value="Medium" disabled="True">Medium</ToggleButton>
+                            <ToggleButton value="Medium" disabled>Medium</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
                 <Box>
