@@ -60,7 +60,6 @@ class executeProgram {
             case "python":
                 {   
                     code = code + "\nimport json" + "\ninput='" + inputJSON + "'" + "\ninput=json.loads(input)" + "\n" + callerCode
-                    //console.log(code)
                     let output = this.python.evaluate(code)
                     output.then(op => toDoFuction(op))
                     .catch((err)=>toDoFuction(err))
@@ -88,7 +87,16 @@ async function evaluatePython(code, pyodideReadyPromise) {
     try {
         console.log(code)
         let output = pyodide.runPython(code);
-        return output
+        console.log(output)
+            try {
+                const convertedOutput = output.toJs({depth : 1})
+                //console.log(output, convertedOutput)
+                return convertedOutput
+            }
+            catch(err) {
+                console.log(err)
+                return output
+            }        
         } 
     catch (err) {
         console.log(err)

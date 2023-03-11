@@ -1,4 +1,5 @@
 import gif_tictactoe from "./../../media/tictactoe.gif"
+import gif_array1Doperation from "./../../media/array_1d_operations.gif"
 
 
 export const gameChallengeInformation = [
@@ -10,3 +11,19 @@ export const gameChallengeInformation = [
     },
 ]
 
+
+export const programmingChallengeInformation = [
+    {
+        name: "1-D Arrays",
+        key: "array1doperations",
+        description: "Array are most common structure in programming. So, let us sharpen it.",
+        cardImage: gif_array1Doperation
+    },
+
+    {
+        name: "Loops",
+        key: "loopoperations",
+        description: "Loop with our OWL",
+        cardImage: gif_tictactoe
+    }
+]

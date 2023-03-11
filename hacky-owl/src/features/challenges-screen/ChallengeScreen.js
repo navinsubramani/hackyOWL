@@ -3,7 +3,7 @@ import './ChallengeScreen.css'
 
 import { useDispatch } from "react-redux";
 import {UPDATE_DISPLAY_SCREEN} from "./../nav-bar/NavBarslice"
-import {gameChallengeInformation} from './ChallengeConstants'
+import {gameChallengeInformation, programmingChallengeInformation} from './ChallengeConstants'
 
 import ChallengeCardList from "./../../component/ChallengeCardList"
 
@@ -11,6 +11,7 @@ import ChallengeCardList from "./../../component/ChallengeCardList"
 function ChallengeScreen() {
 
     const gameListInformation = gameChallengeInformation
+    const programListInformation = programmingChallengeInformation
 
     const dispatch = useDispatch()
 
@@ -36,7 +37,7 @@ function ChallengeScreen() {
             <p className="ChallengeListHeader">Programming Challenges</p>
             <ChallengeCardList 
                 onClick={onChallengeClick}
-                cardListInformation={gameListInformation}
+                cardListInformation={programListInformation}
                 />
 
         </div>

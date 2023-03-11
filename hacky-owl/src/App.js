@@ -7,6 +7,8 @@ import NavBar from './features/nav-bar/NavBar';
 import HomeScreen from './features/home-screen/HomeScreen'
 import TicTacToe from './challenges/tic-tac-toe/tictactoe_container'
 import ChallengeScreen from './features/challenges-screen/ChallengeScreen'
+import ArrayIDS from './challenges/array-1d-operation/Array_1D_container'
+import Loops from './challenges/loop-operation/Loop_container'
 
 // Import the Execution engine related modules
 import executeProgram from './features/code-edit-run/run-program';
@@ -32,7 +34,18 @@ function App() {
     }
 
     else if (displayScreen === "tictactoe") {
+      console.log("Tic Tac Toe page")
       return <TicTacToe />
+    }
+
+    else if (displayScreen === "array1doperations") {
+      console.log("Array ID Operations Page")
+      return <ArrayIDS />
+    }
+
+    else if (displayScreen === "loopoperations") {
+      console.log("Array 1D Operations Page")
+      return <Loops />
     }
 
     else {

@@ -15,8 +15,10 @@ export default function ChallengeCardList(props) {
                     onClick={onClick}
                     cardImage={element.cardImage}
                     name={element.name}
-                    challengeKey={element.key}
                     description={element.description}
+                    challengeKey={element.key}
+
+                    key={element.key}
                     />
             }
         )

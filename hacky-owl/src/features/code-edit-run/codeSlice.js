@@ -57,7 +57,6 @@ export const codeSlice = createSlice({
             // Store the editor Value to the local Storage
             //localStorage.setItem('editorValue', action.payload.value)
             localStorage.setItem('editorState', action.payload.viewUpdateState)
-            console.log(action)
         },
 
         UPDATE_CONSOLE_VALUE: (state, action) => {
