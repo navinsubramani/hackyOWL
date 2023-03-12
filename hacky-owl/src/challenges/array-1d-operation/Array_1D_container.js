@@ -90,14 +90,14 @@ function Array1DOperations() {
         actualInput = currentChallengeDetails.challengeInputFunction()
         expectedOutput = currentChallengeDetails.challengeOutputFunction(actualInput)
         actualOutput = undefined
-        console.log("Started: ", actualInput, expectedOutput)
+        //console.log("Started: ", actualInput, expectedOutput)
         setTimeout(() => exec.evaluateCodeExternally(editorLang, editorValue, callerCode, JSON.stringify(actualInput), onChallengeEnd), 100)
     })
 
     const onChallengeEnd = React.useCallback((Output) => {
         actualOutput = Output
         codeResultValid = (JSON.stringify(expectedOutput) === JSON.stringify(actualOutput)) ? true : false
-        console.log("complete: ", actualOutput, codeResultValid)
+        //console.log("complete: ", actualOutput, codeResultValid)
         outputJSXList.push(convertOutputJSX({
             input: JSON.stringify(actualInput),
             output: JSON.stringify(actualOutput),
@@ -117,6 +117,9 @@ function Array1DOperations() {
         dispatch(UPDATE_CURRENT_CHALLENGE({
             challengeID: value
         }))
+        actualInput = undefined
+        actualOutput = undefined
+        codeResultValid = false
     })
 
     const onChallengeSelectorNext = React.useCallback((event) => {
@@ -125,6 +128,9 @@ function Array1DOperations() {
         dispatch(UPDATE_CURRENT_CHALLENGE({
             challengeID: nextChallengeID
         }))
+        actualInput = undefined
+        actualOutput = undefined
+        codeResultValid = false
     })
 
     const onChallengeSelectorPrevious = React.useCallback((event) => {
@@ -133,6 +139,9 @@ function Array1DOperations() {
         dispatch(UPDATE_CURRENT_CHALLENGE({
             challengeID: previousChallengeID
         }))
+        actualInput = undefined
+        actualOutput = undefined
+        codeResultValid = false
     })
 
     // This function will be executed when the tab changes
@@ -147,7 +156,7 @@ function Array1DOperations() {
                     <p><strong>1-Dimensional Array Operations</strong></p>
                 </div>
                 <div className="ChallengeInteractionArea_1">
-                    <Array1DUI input={actualInput} output={actualOutput} valid={codeResultValid}/>
+                    <Array1DUI input={actualInput} output={actualOutput} valid={codeResultValid} challenge={currentChallengeID}/>
                 </div>
                 <div className="ChallengeInteractionArea_2">
                     <PlayButton onClick={onChallengeStart}></PlayButton>

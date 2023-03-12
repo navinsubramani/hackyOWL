@@ -20,10 +20,4 @@ export const programmingChallengeInformation = [
         cardImage: gif_array1Doperation
     },
 
-    {
-        name: "Loops",
-        key: "loopoperations",
-        description: "Loop with our OWL",
-        cardImage: gif_tictactoe
-    }
 ]
