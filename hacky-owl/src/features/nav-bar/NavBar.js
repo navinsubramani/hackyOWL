@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { UPDATE_DISPLAY_SCREEN } from "./NavBarslice"
+import { Link } from 'react-router-dom'
 
 import './NavBar.css'
 import hackyOWL from './../../media/hackyowl_icon.svg'
@@ -12,24 +13,27 @@ function NavBar(props) {
     const dispatch = useDispatch()
 
     const onHomeButtonChange = React.useCallback(() => {
-        dispatch(UPDATE_DISPLAY_SCREEN("home_page"))
+        dispatch(UPDATE_DISPLAY_SCREEN(""))
     })
 
     const onChallengeButtonChange = React.useCallback(() => {
-        dispatch(UPDATE_DISPLAY_SCREEN("challenge_page"))
+        dispatch(UPDATE_DISPLAY_SCREEN("challenges"))
     }) 
 
     return (
         <div className="NavBar">
-            <img src={hackyOWL}
-                 className="hackyowl" 
-                 alt="Hacky OWL"
-                 onClick={onHomeButtonChange}
-                 
-            ></img>
-            <ChallengeButton 
-                onClick={onChallengeButtonChange}
-                />
+            <Link to={"/"} style={{ textDecoration: 'none' }}>
+                <img src={hackyOWL}
+                    className="hackyowl" 
+                    alt="Hacky OWL"
+                    onClick={onHomeButtonChange}
+                ></img>
+            </Link>
+            <Link to={"/challenges"} style={{ textDecoration: 'none' }}>
+                <ChallengeButton 
+                    onClick={onChallengeButtonChange}
+                    />
+            </Link>
         </div>
     )
 }

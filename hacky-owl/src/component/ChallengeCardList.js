@@ -1,5 +1,6 @@
 import React from 'react';
 import ChallengeCard from './ChallengeCard';
+import { Link } from 'react-router-dom'
 
 import './ChallengeCardList.css'
 
@@ -11,15 +12,13 @@ export default function ChallengeCardList(props) {
     const generateCardListUI = (cardListInformation) => 
         cardListInformation.map(
             (element) => {
-                return <ChallengeCard 
+                return <Link to={"/"+element.key} key={element.key} style={{ textDecoration: 'none' }}><ChallengeCard 
                     onClick={onClick}
                     cardImage={element.cardImage}
                     name={element.name}
                     description={element.description}
                     challengeKey={element.key}
-
-                    key={element.key}
-                    />
+                    /></Link>
             }
         )
 

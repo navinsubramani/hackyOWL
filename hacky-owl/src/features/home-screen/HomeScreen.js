@@ -1,5 +1,6 @@
 import React from "react";
 import './HomeScreen.css'
+import { Link } from 'react-router-dom'
 
 import {HackyOwlButton} from './../../component/Custom-Buttons'
 
@@ -34,7 +35,7 @@ function HomeScreen() {
     }, []);
 
     const onGettingStarted = useCallback(() => {
-        dispatch(UPDATE_DISPLAY_SCREEN("challenge_page"))
+        dispatch(UPDATE_DISPLAY_SCREEN("challenges"))
     })
 
     return (
@@ -120,12 +121,10 @@ function HomeScreen() {
             <div className="LandingInfo">
 
                 <strong>CODING MADE FUN</strong>
-                
-
-                <div className="GetStarted">
-                    <HackyOwlButton onClick={onGettingStarted}/>
-                    <strong>GET STARTED</strong>
-                </div>
+                    <Link to={'/challenges'} className="GetStarted">
+                        <HackyOwlButton onClick={onGettingStarted}/>
+                        <strong>GET STARTED</strong>
+                    </Link>
             </div>
 
 

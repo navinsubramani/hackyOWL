@@ -35,6 +35,7 @@ canvas {
 
 .GetStarted {
 
+    text-decoration: none;
 
     width: 10rem;
     height: 10rem;

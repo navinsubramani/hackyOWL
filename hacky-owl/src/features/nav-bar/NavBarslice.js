@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    displayScreen: "home_page"
+    displayScreen: ""
 }
 
 export const navBarSlice = createSlice({

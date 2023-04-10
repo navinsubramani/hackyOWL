@@ -78,7 +78,7 @@ class executeProgram {
 
 // In the index.html add a head script as, <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
 async function initializePyodide() {
-    let pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/" });
+    let pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.0/full/" });
     return pyodide;
 };
 
